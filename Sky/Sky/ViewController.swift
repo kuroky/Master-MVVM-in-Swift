@@ -12,7 +12,12 @@ class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+        
+        WeatherDataManager.shared.weatherDataAt(latitude: 52, longtitude: 100) { (response, error) in
+            print(response)
+            //data = response
+            //expect.fulfill()
+        }
     }
     
     

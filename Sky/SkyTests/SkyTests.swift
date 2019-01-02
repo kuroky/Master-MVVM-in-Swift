@@ -1,6 +1,6 @@
 //
 //  SkyTests.swift
-//  Sky
+//  SkyTests
 //
 //  Created by kuroky on 2019/1/2.
 //  Copyright © 2019 Kuroky. All rights reserved.
@@ -10,25 +10,111 @@ import XCTest
 @testable import Sky
 
 class SkyTests: XCTestCase {
-
+    let url = URL(string: "https://darksky.net")!
+    var session: MockURLSession!
+    var manager: WeatherDataManager!
+    
     override func setUp() {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
+        self.session = MockURLSession()
+        self.manager = WeatherDataManager(baseURL: url, urlSession: session)
     }
 
     override func tearDown() {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
     }
 
-    func testExample() {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-    }
-
-    func testPerformanceExample() {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
+    func test_weather_start() {
+        let dataTask = MockURLSessionDataTask()
+        
+        session.sessionDataTask = dataTask
+        
+        manager.weatherDataAt(latitude: 52, longtitude: 100) { (_, _) in
+            
         }
+        
+        XCTAssert(session.sessionDataTask.isResumedCalled)
     }
 
+    func test_weatherData_get_data() {
+        let expect = expectation(description: "loding data from")
+        var data: WeatherData? = nil
+        
+        manager.weatherDataAt(latitude: 52, longtitude: 100) { (response, error) in
+            data = response
+            expect.fulfill()
+        }
+        
+        waitForExpectations(timeout: 5, handler: nil)
+        
+        XCTAssertNotNil(data)
+    }
+    
+    func test_weatherDataAt_handle_invalid_request() {
+        session.responseError = NSError(domain: "Invalid Request", code: 100, userInfo: nil)
+        
+        var error: DataManagerError? = nil
+        
+        manager.weatherDataAt(latitude: 52, longtitude: 100) { (_, e) in
+            error = e
+        }
+        
+        XCTAssertEqual(error, DataManagerError.failedRequest)
+    }
+    
+    func test_weatherDataAt_handle_statuscode_not_equal_to_200() {
+        session.responseHeader = HTTPURLResponse(url: url, statusCode: 400, httpVersion: nil, headerFields: nil)
+        
+        let data = "{}".data(using: .utf8)!
+        session.responseData = data
+        var error: DataManagerError? = nil
+        
+        manager.weatherDataAt(latitude: 52, longtitude: 100) { (_, e) in
+            error = e
+        }
+        
+        XCTAssertEqual(error, DataManagerError.failedRequest)
+    }
+    
+    func test_weatherDataAt_handle_invalid_response() {
+        session.responseHeader = HTTPURLResponse(url: url, statusCode: 200, httpVersion: nil, headerFields: nil)
+        
+        let data = "{".data(using: .utf8)!
+        session.responseData = data
+        
+        var error: DataManagerError? = nil
+        manager.weatherDataAt(latitude: 52, longtitude: 100) { (_, e) in
+            error = e
+        }
+        
+        XCTAssertEqual(error, DataManagerError.invalidResponse)
+    }
+    
+    func test_weatherDataAt_handle_response_decode() {
+        session.responseHeader = HTTPURLResponse(url: url, statusCode: 200, httpVersion: nil, headerFields: nil)
+        
+        let data = """
+        {
+        "longitude" : 100,
+            "latitude" : 52,
+            "currently" : {
+                "temperature" : 23,
+                "humidity" : 0.91,
+                "icon" : "snow",
+                "time" : 1507180335,
+                "summary" : "Light Snow"
+            }
+        }
+        """.data(using: .utf8)!
+        session.responseData = data
+        
+        var decoded: WeatherData = WeatherData(latitude: 1, longitude: 1, currently: WeatherData.CurrentWeather.init(time: Date(), summary: "", icon: "", temperature: 1, humidity: 1))
+        
+        manager.weatherDataAt(latitude: 52, longtitude: 100) { (d, _) in
+            decoded = d!
+        }
+        
+        let expected = WeatherData(latitude: 52, longitude: 100, currently: WeatherData.CurrentWeather(time: Date.init(timeIntervalSince1970: 1507180335), summary: "Light Snow", icon: "snow", temperature: 23, humidity: 0.91))
+        
+        XCTAssertEqual(decoded, expected)
+    }
 }
