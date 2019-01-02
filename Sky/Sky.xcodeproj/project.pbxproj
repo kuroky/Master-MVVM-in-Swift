@@ -14,6 +14,10 @@
 		5BB0223F21D7275900533925 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5BB0223E21D7275900533925 /* Assets.xcassets */; };
 		5BB0224221D7275900533925 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5BB0224021D7275900533925 /* LaunchScreen.storyboard */; };
 		5BC4BEC721DC581B007DFA80 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5BC4BEC621DC581B007DFA80 /* Default-568h@2x.png */; };
+		5BFC4D9721DC676900140D08 /* Configuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BFC4D9621DC676900140D08 /* Configuration.swift */; };
+		5BFC4D9921DC694200140D08 /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BFC4D9821DC694200140D08 /* Location.swift */; };
+		5BFC4D9B21DC69AF00140D08 /* WeatherData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BFC4D9A21DC69AF00140D08 /* WeatherData.swift */; };
+		5BFC4D9E21DC6A8B00140D08 /* WeatherDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BFC4D9D21DC6A8B00140D08 /* WeatherDataManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +32,10 @@
 		5BB0224321D7275900533925 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5BC4BEC321DC5428007DFA80 /* SkyTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkyTests.swift; sourceTree = "<group>"; };
 		5BC4BEC621DC581B007DFA80 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		5BFC4D9621DC676900140D08 /* Configuration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Configuration.swift; sourceTree = "<group>"; };
+		5BFC4D9821DC694200140D08 /* Location.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Location.swift; sourceTree = "<group>"; };
+		5BFC4D9A21DC69AF00140D08 /* WeatherData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherData.swift; sourceTree = "<group>"; };
+		5BFC4D9D21DC6A8B00140D08 /* WeatherDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherDataManager.swift; sourceTree = "<group>"; };
 		D38B3EAAD3E08C7388D754BC /* Pods-Sky.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Sky.debug.xcconfig"; path = "Target Support Files/Pods-Sky/Pods-Sky.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -55,6 +63,9 @@
 			isa = PBXGroup;
 			children = (
 				5BB0223621D7275600533925 /* Sky */,
+				5BFC4D9421DC674700140D08 /* Model */,
+				5BFC4D9521DC675000140D08 /* Controller */,
+				5BFC4D9C21DC6A6800140D08 /* Manager */,
 				5BC4BEC521DC5803007DFA80 /* Resource */,
 				5BC4BEC221DC53DE007DFA80 /* SkyTests */,
 				5BB0223521D7275600533925 /* Products */,
@@ -98,6 +109,31 @@
 				5BC4BEC621DC581B007DFA80 /* Default-568h@2x.png */,
 			);
 			path = Resource;
+			sourceTree = "<group>";
+		};
+		5BFC4D9421DC674700140D08 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				5BFC4D9621DC676900140D08 /* Configuration.swift */,
+				5BFC4D9821DC694200140D08 /* Location.swift */,
+				5BFC4D9A21DC69AF00140D08 /* WeatherData.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		5BFC4D9521DC675000140D08 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		5BFC4D9C21DC6A6800140D08 /* Manager */ = {
+			isa = PBXGroup;
+			children = (
+				5BFC4D9D21DC6A8B00140D08 /* WeatherDataManager.swift */,
+			);
+			path = Manager;
 			sourceTree = "<group>";
 		};
 		B10AEC40C926BCF6EDDFF44B /* Pods */ = {
@@ -236,7 +272,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5BFC4D9E21DC6A8B00140D08 /* WeatherDataManager.swift in Sources */,
+				5BFC4D9721DC676900140D08 /* Configuration.swift in Sources */,
+				5BFC4D9B21DC69AF00140D08 /* WeatherData.swift in Sources */,
 				5BB0223A21D7275600533925 /* ViewController.swift in Sources */,
+				5BFC4D9921DC694200140D08 /* Location.swift in Sources */,
 				5BB0223821D7275600533925 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
