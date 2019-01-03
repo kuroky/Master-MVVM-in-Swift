@@ -14,11 +14,26 @@ class CurrentWeatherUITests: XCTestCase {
     override func setUp() {
         super.setUp()
         continueAfterFailure = false
+        
+        app.launchArguments += ["UI-TESTING"]
+        app.launchEnvironment["FakeJSON"] = """
+        {
+            "longitude": 100,
+            "latitude": 52,
+            "currently": {
+                "temperature": 23,
+                "humidity": 0.91,
+                "icon": "snow",
+                "time": 1507180335,
+                "summary": "Light Snow"
+            }
+        }
+        """
         app.launch()
     }
 
     override func tearDown() {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
+        
     }
 
     func test_location_button_exists() {
@@ -30,5 +45,9 @@ class CurrentWeatherUITests: XCTestCase {
         
         XCTAssert(locationBtn.exists)
     }
-
+    
+    func test_currently_weather_display() {
+        XCTAssert(app.images["snow"].exists)
+        XCTAssert(app.staticTexts["Light Snow"].exists)
+    }
 }
