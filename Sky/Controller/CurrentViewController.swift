@@ -26,9 +26,60 @@ class CurrentViewController: WeatherViewController {
     
     weak var delegate: CurrentWeatherViewControllerDelegate?
     
+    var now: WeatherData? {
+        didSet {
+            DispatchQueue.main.async {
+                self.updateView()
+            }
+        }
+    }
+    
+    var location: Location? {
+        didSet {
+            DispatchQueue.main.async {
+                self.updateView()
+            }
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.requestData()
+    }
+    
+    func updateView() {
+        self.activityIndicatorView.stopAnimating()
+        
+        if let now = now, let location = location {
+            self.updateWeatherContainer(with: now, at: location)
+        }
+        else {
+            self.loadingFailedLabel.isHidden = false
+            self.loadingFailedLabel.text = "Cannot load fetch weather/location data from the network."
+        }
+    }
+    
+    func requestData() {
+        WeatherDataManager.shared.weatherDataAt(latitude: 50, longtitude: 100) { (data, error) in
+            self.now = data
+        }
+    }
+    
+    func updateWeatherContainer(with data: WeatherData, at location: Location) {
+        self.weatherContainerView.isHidden = false
+        
+        self.locationLabel.text = location.name
+        self.temperatureLabel.text = String(format: "%.1f °C", data.currently.temperature.toCelcius())
+        
+        weatherIcon.image = self.weatherIcon(of: data.currently.icon)
+        
+        self.humidityLabel.text = String(format: "%.1f %%", data.currently.humidity * 100)
+        
+        self.summaryLabel.text = data.currently.summary
+        
+        let formatter = DateFormatter()
+        formatter.dateFormat = "E, dd MMMM"
+        self.dateLabel.text = formatter.string(from: data.currently.time)
     }
     
     //MARK:- Button Action
@@ -39,5 +90,4 @@ class CurrentViewController: WeatherViewController {
     @IBAction func settingsButtonPressed(_ sender: UIButton) {
         self.delegate?.settingsButtonPressed(controller: self)
     }
-    
 }

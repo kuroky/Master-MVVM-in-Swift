@@ -16,5 +16,19 @@ class WeatherViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.setupUI()
+    }
+    
+    func setupUI() {
+        self.weatherContainerView.isHidden = true
+        self.loadingFailedLabel.isHidden = true
+        self.activityIndicatorView.startAnimating()
+        self.activityIndicatorView.hidesWhenStopped = true
+    }
+    
+    
+    
+    func weatherIcon(of name: String) -> UIImage? {
+        return UIImage(named: name)
     }
 }

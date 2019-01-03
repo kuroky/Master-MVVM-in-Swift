@@ -13,8 +13,9 @@
 		5B99C8AB21DCA77600C53E64 /* MockURLSessionDataTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BFC4EBD21DCA00500140D08 /* MockURLSessionDataTask.swift */; };
 		5BAE25D821DDA9100022265E /* WeatherViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BAE25D721DDA9100022265E /* WeatherViewController.swift */; };
 		5BAE25DA21DDA9520022265E /* CurrentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BAE25D921DDA9520022265E /* CurrentViewController.swift */; };
+		5BAE25DC21DDB9810022265E /* Double.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BAE25DB21DDB9810022265E /* Double.swift */; };
+		5BAE25DE21DDBE130022265E /* RootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BAE25DD21DDBE130022265E /* RootViewController.swift */; };
 		5BB0223821D7275600533925 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BB0223721D7275600533925 /* AppDelegate.swift */; };
-		5BB0223A21D7275600533925 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BB0223921D7275600533925 /* ViewController.swift */; };
 		5BB0223D21D7275600533925 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5BB0223B21D7275600533925 /* Main.storyboard */; };
 		5BB0223F21D7275900533925 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5BB0223E21D7275900533925 /* Assets.xcassets */; };
 		5BB0224221D7275900533925 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5BB0224021D7275900533925 /* LaunchScreen.storyboard */; };
@@ -47,9 +48,10 @@
 		5B99C8A321DCA76D00C53E64 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5BAE25D721DDA9100022265E /* WeatherViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherViewController.swift; sourceTree = "<group>"; };
 		5BAE25D921DDA9520022265E /* CurrentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentViewController.swift; sourceTree = "<group>"; };
+		5BAE25DB21DDB9810022265E /* Double.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Double.swift; sourceTree = "<group>"; };
+		5BAE25DD21DDBE130022265E /* RootViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootViewController.swift; sourceTree = "<group>"; };
 		5BB0223421D7275600533925 /* Sky.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Sky.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5BB0223721D7275600533925 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		5BB0223921D7275600533925 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		5BB0223C21D7275600533925 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		5BB0223E21D7275900533925 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		5BB0224121D7275900533925 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -110,11 +112,11 @@
 			isa = PBXGroup;
 			children = (
 				5BB0223621D7275600533925 /* Sky */,
-				5BFC4EB121DC9C3B00140D08 /* Protocols */,
-				5BFC4EBA21DC9E8B00140D08 /* Extensions */,
 				5BFC4D9421DC674700140D08 /* Model */,
 				5BFC4D9521DC675000140D08 /* Controller */,
 				5BFC4D9C21DC6A6800140D08 /* Manager */,
+				5BFC4EBA21DC9E8B00140D08 /* Extensions */,
+				5BFC4EB121DC9C3B00140D08 /* Protocols */,
 				5BC4BEC521DC5803007DFA80 /* Resource */,
 				5B99C8A021DCA76D00C53E64 /* SkyTests */,
 				5BB0223521D7275600533925 /* Products */,
@@ -136,7 +138,7 @@
 			isa = PBXGroup;
 			children = (
 				5BB0223721D7275600533925 /* AppDelegate.swift */,
-				5BB0223921D7275600533925 /* ViewController.swift */,
+				5BAE25DD21DDBE130022265E /* RootViewController.swift */,
 			);
 			path = Sky;
 			sourceTree = "<group>";
@@ -194,6 +196,7 @@
 			children = (
 				5BFC4EB421DC9D3B00140D08 /* URLSession.swift */,
 				5BFC4EBB21DC9EF900140D08 /* URLSessionDataTask.swift */,
+				5BAE25DB21DDB9810022265E /* Double.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -378,11 +381,12 @@
 				5BFC4D9E21DC6A8B00140D08 /* WeatherDataManager.swift in Sources */,
 				5BFC4EB921DC9DEC00140D08 /* URLSessionDataTaskProtocol.swift in Sources */,
 				5BFC4EBC21DC9EF900140D08 /* URLSessionDataTask.swift in Sources */,
+				5BAE25DE21DDBE130022265E /* RootViewController.swift in Sources */,
+				5BAE25DC21DDB9810022265E /* Double.swift in Sources */,
 				5BAE25DA21DDA9520022265E /* CurrentViewController.swift in Sources */,
 				5BFC4EB521DC9D3B00140D08 /* URLSession.swift in Sources */,
 				5BFC4D9721DC676900140D08 /* Configuration.swift in Sources */,
 				5BFC4D9B21DC69AF00140D08 /* WeatherData.swift in Sources */,
-				5BB0223A21D7275600533925 /* ViewController.swift in Sources */,
 				5BFC4D9921DC694200140D08 /* Location.swift in Sources */,
 				5BB0223821D7275600533925 /* AppDelegate.swift in Sources */,
 				5BAE25D821DDA9100022265E /* WeatherViewController.swift in Sources */,
