@@ -94,7 +94,7 @@ class SkyTests: XCTestCase {
         
         let data = """
         {
-        "longitude" : 100,
+            "longitude" : 100,
             "latitude" : 52,
             "currently" : {
                 "temperature" : 23,
@@ -102,18 +102,31 @@ class SkyTests: XCTestCase {
                 "icon" : "snow",
                 "time" : 1507180335,
                 "summary" : "Light Snow"
+            },
+            "daily": {
+                "data": [
+                    {
+                        "time":1507180335,
+                        "icon": "clear-day",
+                        "temperatureLow": 66,
+                        "temperatureHigh": 82,
+                        "humidity": 0.25
+                    }
+                ]
             }
         }
         """.data(using: .utf8)!
         session.responseData = data
         
-        var decoded: WeatherData = WeatherData(latitude: 1, longitude: 1, currently: WeatherData.CurrentWeather.init(time: Date(), summary: "", icon: "", temperature: 1, humidity: 1))
+        var decoded: WeatherData!
         
         manager.weatherDataAt(latitude: 52, longtitude: 100) { (d, _) in
             decoded = d!
         }
         
-        let expected = WeatherData(latitude: 52, longitude: 100, currently: WeatherData.CurrentWeather(time: Date.init(timeIntervalSince1970: 1507180335), summary: "Light Snow", icon: "snow", temperature: 23, humidity: 0.91))
+        let expectedWeekData = WeatherData.WeekWeatherData(data: [ForecastData(time: Date(timeIntervalSince1970: 1507180335), temperatureLow: 66, temperatureHigh: 82, icon: "clear-day", humidity: 0.25)])
+        
+        let expected = WeatherData(latitude: 52, longitude: 100, currently: WeatherData.CurrentWeather(time: Date.init(timeIntervalSince1970: 1507180335), summary: "Light Snow", icon: "snow", temperature: 23, humidity: 0.91), daily: expectedWeekData)
         
         XCTAssertEqual(decoded, expected)
     }

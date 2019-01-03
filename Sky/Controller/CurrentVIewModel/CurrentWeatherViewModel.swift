@@ -44,7 +44,7 @@ struct CurrentWeatherViewModel {
     }
     
     var temperature: String {
-        return String(format: "%.1f °C", weather.currently.temperature.toCelcius())
+        return String(format: "%.1f °C", weather.currently.temperature.toCelsius())
     }
     
     var weatherIcon: UIImage? {
