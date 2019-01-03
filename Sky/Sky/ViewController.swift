@@ -12,15 +12,6 @@ class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        WeatherDataManager.shared.weatherDataAt(latitude: 52, longtitude: 100) { (response, error) in
-            print(response)
-            //data = response
-            //expect.fulfill()
-        }
     }
-    
-    
-    
 }
 
