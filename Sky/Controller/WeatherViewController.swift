@@ -25,10 +25,4 @@ class WeatherViewController: UIViewController {
         self.activityIndicatorView.startAnimating()
         self.activityIndicatorView.hidesWhenStopped = true
     }
-    
-    
-    
-    func weatherIcon(of name: String) -> UIImage? {
-        return UIImage(named: name)
-    }
 }

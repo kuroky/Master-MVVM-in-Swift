@@ -51,7 +51,7 @@ class RootViewController: UIViewController {
             }
             else if let city = placemarks?.first?.locality {
                 // noti vc
-                self.currentWeatherViewController.location = Location(name: city, latitude: currentLocation.coordinate.latitude, longitude: currentLocation.coordinate.longitude)
+                self.currentWeatherViewController.viewModel.location = Location(name: city, latitude: currentLocation.coordinate.latitude, longitude: currentLocation.coordinate.longitude)
             }
         }
     }
@@ -72,7 +72,7 @@ class RootViewController: UIViewController {
             
             if let response = data {
                 // noti vc
-                self.currentWeatherViewController.now = response
+                self.currentWeatherViewController.viewModel.weather = response
             }
         }
     }
@@ -89,6 +89,7 @@ class RootViewController: UIViewController {
             }
             
             destination.delegate = self
+            destination.viewModel = CurrentWeatherViewModel()
             self.currentWeatherViewController = destination
         default:
             break
