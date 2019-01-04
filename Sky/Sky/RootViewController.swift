@@ -14,9 +14,12 @@ class RootViewController: UIViewController {
     var currentWeatherViewController: CurrentViewController!
     var weekWeatherViewController: WeekWeatherViewController!
     var settingViewController: SettingTableViewController!
+    var locationViewController: LocationsViewController!
+    
     private let segueCurrentWeather = "SegueCurrentWeather"
     private let segueWeekWeather = "SegueWeekWeather"
     private let segueSettings = "SegueSettings"
+    private let segueLocations = "SegueLocations"
     
     private lazy var manager: CLLocationManager = {
        let manager = CLLocationManager()
@@ -111,7 +114,11 @@ class RootViewController: UIViewController {
             }
             destination.delegate = self
             self.settingViewController = destination
-            
+        case segueLocations:
+            guard let destination = segue.destination as? LocationsViewController else {
+                fatalError("Invalid destionation weekWeather view controller")
+            }
+            self.locationViewController = destination
         default:
             break
         }

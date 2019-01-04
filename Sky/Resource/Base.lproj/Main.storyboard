@@ -46,6 +46,7 @@
                     </view>
                     <connections>
                         <segue destination="iKP-aS-rMP" kind="presentation" identifier="SegueSettings" id="bcj-up-2gr"/>
+                        <segue destination="YJ2-sL-nc9" kind="presentation" identifier="SegueLocations" id="1Ro-Fu-3pU"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -101,7 +102,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="aQG-Hq-g74" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="r06-3A-hG0" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="2362" y="34"/>
+            <point key="canvasLocation" x="2729" y="734"/>
         </scene>
         <!--Current View Controller-->
         <scene sceneID="eZT-Fh-CHQ">
@@ -364,6 +365,54 @@
             </objects>
             <point key="canvasLocation" x="-102" y="824"/>
         </scene>
+        <!--Table View Controller-->
+        <scene sceneID="x8i-Eb-bNT">
+            <objects>
+                <tableViewController id="ERb-TK-QFK" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="66y-4X-yLE">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="LocationCell" id="lZz-Lz-VoY" customClass="LocationTableViewCell" customModule="Sky" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="55.5" width="375" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="lZz-Lz-VoY" id="xcO-zk-Q8R">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RMD-xf-HWY">
+                                            <rect key="frame" x="26" y="11.5" width="323" height="21"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstAttribute="trailingMargin" secondItem="RMD-xf-HWY" secondAttribute="trailing" constant="10" id="ZEi-u9-f8l"/>
+                                        <constraint firstItem="RMD-xf-HWY" firstAttribute="centerY" secondItem="xcO-zk-Q8R" secondAttribute="centerY" id="b7e-Pp-1IL"/>
+                                        <constraint firstItem="RMD-xf-HWY" firstAttribute="leading" secondItem="xcO-zk-Q8R" secondAttribute="leadingMargin" constant="10" id="nR4-o6-SMU"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="label" destination="RMD-xf-HWY" id="8f8-vz-Ox9"/>
+                                </connections>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="ERb-TK-QFK" id="AHr-2r-Vmm"/>
+                            <outlet property="delegate" destination="ERb-TK-QFK" id="yzp-lc-7bZ"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" id="DF7-BA-NGe">
+                        <barButtonItem key="leftBarButtonItem" style="plain" systemItem="add" id="aCr-NK-46k"/>
+                        <barButtonItem key="rightBarButtonItem" systemItem="done" id="2LS-yd-WW4"/>
+                    </navigationItem>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ImZ-6m-zYt" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3030" y="-192"/>
+        </scene>
         <!--Navigation Controller-->
         <scene sceneID="CJt-sT-svL">
             <objects>
@@ -380,7 +429,25 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="a5l-GR-xnB" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1498" y="34"/>
+            <point key="canvasLocation" x="1911" y="757"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="fEx-4H-q8w">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="YJ2-sL-nc9" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="HL7-sq-ktw">
+                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="ERb-TK-QFK" kind="relationship" relationship="rootViewController" id="QTd-q4-dv1"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="PlK-ED-ZS9" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1954" y="-216"/>
         </scene>
     </scenes>
     <resources>

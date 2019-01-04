@@ -12,7 +12,7 @@ struct SettingsDateViewModel: SettingsRepresentable {
     let dateMode: DateMode
     
     var labelText: String {
-        return dateMode == .text ? "Fri, 91 " : "F, 12/01"
+        return dateMode == .text ? "Fri, 01 December" : "F, 12/01"
     }
     
     var accessory: UITableViewCell.AccessoryType {

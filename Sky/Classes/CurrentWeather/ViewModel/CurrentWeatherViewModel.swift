@@ -66,7 +66,7 @@ struct CurrentWeatherViewModel {
         return self.weather.currently.summary
     }
     
-    var time: String {
+    var date: String {
         let formatter = DateFormatter()
         formatter.dateFormat = UserDefaults.dateMode().format
         return formatter.string(from: self.weather.currently.time)

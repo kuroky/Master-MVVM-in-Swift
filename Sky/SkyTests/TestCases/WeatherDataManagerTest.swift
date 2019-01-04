@@ -1,6 +1,6 @@
 //
-//  SkyTests.swift
-//  SkyTests
+//  WeatherDataManagerTest.swift
+//  WeatherDataManagerTest
 //
 //  Created by kuroky on 2019/1/2.
 //  Copyright © 2019 Kuroky. All rights reserved.
@@ -9,7 +9,7 @@
 import XCTest
 @testable import Sky
 
-class SkyTests: XCTestCase {
+class WeatherDataManagerTest: XCTestCase {
     let url = URL(string: "https://darksky.net")!
     var session: MockURLSession!
     var manager: WeatherDataManager!

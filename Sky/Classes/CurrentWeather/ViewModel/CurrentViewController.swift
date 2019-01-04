@@ -57,7 +57,7 @@ class CurrentViewController: WeatherViewController {
         self.weatherIcon.image = data.weatherIcon
         self.humidityLabel.text = data.humidity
         self.summaryLabel.text = data.summary
-        self.dateLabel.text =  data.time
+        self.dateLabel.text =  data.date
     }
     
     //MARK:- Button Action
