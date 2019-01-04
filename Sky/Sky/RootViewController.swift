@@ -12,7 +12,10 @@ import CoreLocation
 class RootViewController: UIViewController {
 
     var currentWeatherViewController: CurrentViewController!
+    var weekWeatherViewController: WeekWeatherViewController!
     private let segueCurrentWeather = "SegueCurrentWeather"
+    private let segueWeekWeather = "SegueWeekWeather"
+    
     private lazy var manager: CLLocationManager = {
        let manager = CLLocationManager()
         manager.distanceFilter = 100
@@ -73,6 +76,7 @@ class RootViewController: UIViewController {
             if let response = data {
                 // noti vc
                 self.currentWeatherViewController.viewModel.weather = response
+                self.weekWeatherViewController.viewModel = WeekWeatherViewModel(weatherData: response.daily.data)
             }
         }
     }
@@ -85,12 +89,17 @@ class RootViewController: UIViewController {
         switch identifier {
         case segueCurrentWeather:
             guard let destination = segue.destination as? CurrentViewController else {
-                fatalError("Invalid destionation view controller")
+                fatalError("Invalid destionation currentWeather view controller")
             }
             
             destination.delegate = self
             destination.viewModel = CurrentWeatherViewModel()
             self.currentWeatherViewController = destination
+        case segueWeekWeather:
+            guard let destination = segue.destination as? WeekWeatherViewController else {
+                fatalError("Invalid destionation weekWeather view controller")
+            }
+            self.weekWeatherViewController = destination
         default:
             break
         }
@@ -107,7 +116,6 @@ class RootViewController: UIViewController {
             self.manager.requestWhenInUseAuthorization()
         }
     }
-    
     
     //MARK:- Notification
     @objc func applicationDidBecomeActive(notification: Notification) {

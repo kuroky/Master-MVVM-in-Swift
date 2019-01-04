@@ -27,7 +27,7 @@
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eMo-b8-Gox">
                                 <rect key="frame" x="0.0" y="286" width="375" height="381"/>
                                 <connections>
-                                    <segue destination="vUw-YF-RgF" kind="embed" id="FN5-vn-uvO"/>
+                                    <segue destination="vUw-YF-RgF" kind="embed" identifier="SegueWeekWeather" id="FN5-vn-uvO"/>
                                 </connections>
                             </containerView>
                         </subviews>
@@ -163,14 +163,14 @@
                         <viewLayoutGuide key="safeArea" id="x7g-su-yFM"/>
                     </view>
                     <connections>
-                        <outlet property="activityIndicatorView" destination="4JE-Lv-4KY" id="N4b-S3-GPn"/>
+                        <outlet property="activityIndicatorView" destination="4JE-Lv-4KY" id="Ogl-xC-5qV"/>
                         <outlet property="dateLabel" destination="1MJ-Tp-W3l" id="G8f-iF-po7"/>
                         <outlet property="humidityLabel" destination="eWY-fh-Djd" id="Nli-dy-Y07"/>
-                        <outlet property="loadingFailedLabel" destination="ftX-yp-9YF" id="M6z-o9-k2a"/>
+                        <outlet property="loadingFailedLabel" destination="ftX-yp-9YF" id="Q1Q-ZT-KgW"/>
                         <outlet property="locationLabel" destination="zJc-eU-bHT" id="PZj-UQ-1VY"/>
                         <outlet property="summaryLabel" destination="27t-MP-zz4" id="1Rx-r4-DEG"/>
                         <outlet property="temperatureLabel" destination="Llc-gc-V6y" id="jrG-vr-kt8"/>
-                        <outlet property="weatherContainerView" destination="MXB-Sf-Ang" id="GFH-Ew-gPR"/>
+                        <outlet property="weatherContainerView" destination="MXB-Sf-Ang" id="gYC-We-lCW"/>
                         <outlet property="weatherIcon" destination="gqV-xK-ud7" id="P7M-xa-6ya"/>
                     </connections>
                 </viewController>
@@ -202,7 +202,7 @@
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="381"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <prototypes>
-                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="104" id="S9G-gk-ZT5" customClass="WeekWeatherCell" customModule="Sky" customModuleProvider="target">
+                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="WeekWeatherCell" rowHeight="104" id="S9G-gk-ZT5" customClass="WeekWeatherCell" customModule="Sky" customModuleProvider="target">
                                                 <rect key="frame" x="0.0" y="28" width="375" height="104"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="S9G-gk-ZT5" id="BFm-Cx-a5Z">
@@ -210,7 +210,7 @@
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tuesday" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yxJ-m0-Atc">
-                                                            <rect key="frame" x="15" y="11" width="277" height="24"/>
+                                                            <rect key="frame" x="15" y="11" width="277" height="22.5"/>
                                                             <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="20"/>
                                                             <color key="textColor" red="0.91421842580000001" green="0.2926974893" blue="0.21385452150000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <nil key="highlightedColor"/>
@@ -222,7 +222,7 @@
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="9℃-16℃" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tV2-NR-SUG">
-                                                            <rect key="frame" x="15" y="72" width="172.5" height="21"/>
+                                                            <rect key="frame" x="15" y="70.5" width="172.5" height="22.5"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
@@ -254,12 +254,15 @@
                                                         <constraint firstItem="yxJ-m0-Atc" firstAttribute="leading" secondItem="BFm-Cx-a5Z" secondAttribute="leadingMargin" id="aFN-wQ-wSf"/>
                                                         <constraint firstItem="jl3-gc-dnA" firstAttribute="top" secondItem="BFm-Cx-a5Z" secondAttribute="topMargin" id="eUN-SC-eX3"/>
                                                         <constraint firstAttribute="bottomMargin" secondItem="tV2-NR-SUG" secondAttribute="bottom" id="ft3-Mf-DR5"/>
+                                                        <constraint firstItem="Sji-6C-PFZ" firstAttribute="top" secondItem="yxJ-m0-Atc" secondAttribute="bottom" constant="8" id="o90-Ob-whu"/>
                                                         <constraint firstItem="reL-SQ-JHC" firstAttribute="leading" secondItem="tV2-NR-SUG" secondAttribute="trailing" id="qF5-ZD-ofF"/>
+                                                        <constraint firstItem="tV2-NR-SUG" firstAttribute="top" secondItem="Sji-6C-PFZ" secondAttribute="bottom" constant="8" id="rJd-yJ-2Ll"/>
                                                         <constraint firstItem="jl3-gc-dnA" firstAttribute="trailing" secondItem="BFm-Cx-a5Z" secondAttribute="trailingMargin" id="z2Y-kq-FuU"/>
                                                     </constraints>
                                                 </tableViewCellContentView>
                                                 <connections>
                                                     <outlet property="date" destination="Sji-6C-PFZ" id="aiW-Ov-tcX"/>
+                                                    <outlet property="humid" destination="reL-SQ-JHC" id="ELJ-SX-zJX"/>
                                                     <outlet property="temperature" destination="tV2-NR-SUG" id="gMS-wT-AaD"/>
                                                     <outlet property="weatherIcon" destination="jl3-gc-dnA" id="aie-HS-8bo"/>
                                                     <outlet property="week" destination="yxJ-m0-Atc" id="482-2T-oLD"/>
