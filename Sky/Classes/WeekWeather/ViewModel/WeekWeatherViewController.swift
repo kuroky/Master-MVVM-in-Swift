@@ -15,7 +15,7 @@ class WeekWeatherViewController: WeatherViewController {
     var viewModel: WeekWeatherViewModel? {
         didSet {
             DispatchQueue.main.async {
-                self.updateUI()
+                self.updateView()
             }
         }
     }
@@ -25,7 +25,7 @@ class WeekWeatherViewController: WeatherViewController {
         
     }
     
-    func updateUI() {
+    func updateView() {
         self.updateContainerView()
     }
     

@@ -44,7 +44,14 @@ struct CurrentWeatherViewModel {
     }
     
     var temperature: String {
-        return String(format: "%.1f °C", weather.currently.temperature.toCelsius())
+        let value = weather.currently.temperature
+        
+        switch UserDefaults.temperatureMode() {
+        case .celsius:
+            return String(format: "%.1f °C", value.toCelsius())
+        case .fahrenheit:
+            return String(format: "%.1f °F", value)
+        }
     }
     
     var weatherIcon: UIImage? {
@@ -61,7 +68,7 @@ struct CurrentWeatherViewModel {
     
     var time: String {
         let formatter = DateFormatter()
-        formatter.dateFormat = "E, dd MMMM"
+        formatter.dateFormat = UserDefaults.dateMode().format
         return formatter.string(from: self.weather.currently.time)
     }
 }

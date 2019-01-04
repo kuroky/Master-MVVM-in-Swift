@@ -13,8 +13,10 @@ class RootViewController: UIViewController {
 
     var currentWeatherViewController: CurrentViewController!
     var weekWeatherViewController: WeekWeatherViewController!
+    var settingViewController: SettingTableViewController!
     private let segueCurrentWeather = "SegueCurrentWeather"
     private let segueWeekWeather = "SegueWeekWeather"
+    private let segueSettings = "SegueSettings"
     
     private lazy var manager: CLLocationManager = {
        let manager = CLLocationManager()
@@ -91,7 +93,6 @@ class RootViewController: UIViewController {
             guard let destination = segue.destination as? CurrentViewController else {
                 fatalError("Invalid destionation currentWeather view controller")
             }
-            
             destination.delegate = self
             destination.viewModel = CurrentWeatherViewModel()
             self.currentWeatherViewController = destination
@@ -100,6 +101,17 @@ class RootViewController: UIViewController {
                 fatalError("Invalid destionation weekWeather view controller")
             }
             self.weekWeatherViewController = destination
+        case segueSettings:
+            guard let navigationController = segue.destination as? UINavigationController else {
+                fatalError("Invalid destination view controller!")
+            }
+            
+            guard let destination = navigationController.topViewController as? SettingTableViewController else {
+                fatalError("Invalid destionation weekWeather view controller")
+            }
+            destination.delegate = self
+            self.settingViewController = destination
+            
         default:
             break
         }
@@ -119,6 +131,11 @@ class RootViewController: UIViewController {
     
     //MARK:- Notification
     @objc func applicationDidBecomeActive(notification: Notification) {
+        
+    }
+    
+    @IBAction func unwindToRootViewController(
+        segue: UIStoryboardSegue) {
         
     }
 }
@@ -151,6 +168,23 @@ extension RootViewController: CurrentWeatherViewControllerDelegate {
     }
     
     func settingsButtonPressed(controller: CurrentViewController) {
-        
+        performSegue(withIdentifier: segueSettings, sender: nil)
+    }
+}
+
+extension RootViewController: SettingsViewControllerDelegate {
+    private func reloadUI() {
+        self.currentWeatherViewController.updateView()
+        self.weekWeatherViewController.updateView()
+    }
+
+    func controllerDidChangeTimeMode(
+        controller: SettingTableViewController) {
+        reloadUI()
+    }
+    
+    func controllerDidChangeTemperatureMode(
+        controller: SettingTableViewController) {
+        reloadUI()
     }
 }
