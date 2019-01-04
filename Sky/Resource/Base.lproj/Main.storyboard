@@ -60,7 +60,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="SettingsTableViewCell" id="4iN-DQ-p9Y" customClass="SettingTableViewCell" customModule="Sky" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="SettingsTableViewCell" rowHeight="44" id="4iN-DQ-p9Y" customClass="SettingTableViewCell" customModule="Sky" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="55.5" width="375" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="4iN-DQ-p9Y" id="9bG-R0-ue7">
@@ -68,13 +68,14 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Aq8-H0-tnM">
-                                            <rect key="frame" x="26" y="11.5" width="42" height="21"/>
+                                            <rect key="frame" x="26" y="11.5" width="323" height="21"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                     </subviews>
                                     <constraints>
+                                        <constraint firstAttribute="trailingMargin" secondItem="Aq8-H0-tnM" secondAttribute="trailing" constant="10" id="H3X-b4-azY"/>
                                         <constraint firstItem="Aq8-H0-tnM" firstAttribute="centerY" secondItem="9bG-R0-ue7" secondAttribute="centerY" id="hqA-sY-DzV"/>
                                         <constraint firstItem="Aq8-H0-tnM" firstAttribute="leading" secondItem="9bG-R0-ue7" secondAttribute="leadingMargin" constant="10" id="uOH-J9-64v"/>
                                     </constraints>

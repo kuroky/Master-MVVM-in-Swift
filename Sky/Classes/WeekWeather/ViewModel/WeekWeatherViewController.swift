@@ -60,12 +60,9 @@ extension WeekWeatherViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: WeekWeatherCell.reuseIdentifier, for: indexPath) as! WeekWeatherCell
-        
-        cell.week.text = self.viewModel?.week(for: indexPath.row)
-        cell.date.text = self.viewModel?.date(for: indexPath.row)
-        cell.temperature.text = self.viewModel?.temperature(for: indexPath.row)
-        cell.weatherIcon.image = self.viewModel?.weatherIcon(for: indexPath.row)
-        cell.humid.text = self.viewModel?.humidity(for: indexPath.row)
+        if let weatherDay = self.viewModel?.viewModel(for: indexPath.row) {
+            cell.configItem(item: weatherDay)
+        }
         return cell
     }
 }

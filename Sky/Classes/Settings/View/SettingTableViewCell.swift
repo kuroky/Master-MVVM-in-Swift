@@ -21,7 +21,10 @@ class SettingTableViewCell: UITableViewCell {
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-
     }
 
+    func configItem(viewModel: SettingsRepresentable) {
+        self.label.text = viewModel.labelText
+        self.accessoryType = viewModel.accessory
+    }
 }
