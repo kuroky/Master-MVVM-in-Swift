@@ -78,10 +78,13 @@ final class WeatherDataManager {
         request.httpMethod = "GET"
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         
-        return (self.urlSession as! URLSession).rx.data(request: request).map {
-            let decoder = JSONDecoder()
-            decoder.dateDecodingStrategy = .secondsSince1970
-            return try decoder.decode(WeatherData.self, from: $0)
-        }
+        return (self.urlSession as! URLSession)
+            .rx.data(request: request)
+            .map {
+                let decoder = JSONDecoder()
+                decoder.dateDecodingStrategy = .secondsSince1970
+                let weatherData = try decoder.decode(WeatherData.self, from: $0)
+                return weatherData
+            }
     }
 }

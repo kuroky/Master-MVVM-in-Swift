@@ -25,6 +25,7 @@ class CurrentViewController: WeatherViewController {
     @IBOutlet weak var humidityLabel: UILabel!
     @IBOutlet weak var summaryLabel: UILabel!
     @IBOutlet weak var dateLabel: UILabel!
+    @IBOutlet weak var retryButton: UIButton!
     
     weak var delegate: CurrentWeatherViewControllerDelegate?
     
@@ -42,26 +43,66 @@ class CurrentViewController: WeatherViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        let viewModel = Observable.combineLatest(locationVM, weatherVM) {
+        self.setupUI()
+        self.setupData()
+    }
+    
+    func setupData() {
+        let combined = Observable.combineLatest(locationVM, weatherVM) {
                 return ($0, $1)
             }
-            .filter {
-                let (location, weather) = $0
-                return !(location.isEmoty) && !(weather.isEmpty)
-            }
             .share(replay: 1, scope: .whileConnected)
-            .observeOn(MainScheduler.instance)
         
-        viewModel.map {_ in false }.bind(to: self.activityIndicatorView.rx.isAnimating).disposed(by: bag)
-        viewModel.map {_ in false }.bind(to: self.weatherContainerView.rx.isHidden).disposed(by: bag)
+        let viewModel = combined.filter{
+            let (location, weather) = $0
+            return self.shouldDisplayWeatherContainer(locationVM: location, weatherVM: weather)
+        }.asDriver(onErrorJustReturn: (CurrentLocationViewModel.empty, CurrentWeatherViewModel.empty))
         
-        viewModel.map {$0.0.city }.bind(to: self.locationLabel.rx.text).disposed(by: bag)
-        viewModel.map { $0.1.temperature }.bind(to: self.temperatureLabel.rx.text).disposed(by: bag)
-        viewModel.map { $0.1.weatherIcon }.bind(to: self.weatherIcon.rx.image).disposed(by: bag)
-        viewModel.map { $0.1.humidity }.bind(to: self.humidityLabel.rx.text).disposed(by: bag)
-        viewModel.map { $0.1.summary }.bind(to: self.summaryLabel.rx.text).disposed(by: bag)
-        viewModel.map { $0.1.date }.bind(to: self.dateLabel.rx.text).disposed(by: bag)
+        viewModel.map { $0.0.city }.drive(self.locationLabel.rx.text).disposed(by: bag)
+        viewModel.map { $0.1.temperature }.drive(self.temperatureLabel.rx.text).disposed(by: bag)
+        viewModel.map { $0.1.weatherIcon }.drive(self.weatherIcon.rx.image).disposed(by: bag)
+        viewModel.map { $0.1.humidity }.drive(self.humidityLabel.rx.text).disposed(by: bag)
+        viewModel.map { $0.1.summary }.drive(self.summaryLabel.rx.text).disposed(by: bag)
+        viewModel.map { $0.1.date }.drive(self.dateLabel.rx.text).disposed(by: bag)
+        
+        combined.map { self.shouldHideWeatherContainer(locationVM: $0.0, weatherVM: $0.1) }
+            .asDriver(onErrorJustReturn: true)
+            .drive(self.weatherContainerView.rx.isHidden)
+            .disposed(by: bag) // view容器
+        
+        combined.map { self.shouldHideActivityIndicator(locationVM: $0.0, weatherVM: $0.1) }
+            .asDriver(onErrorJustReturn: false)
+            .drive(self.activityIndicatorView.rx.isHidden)
+            .disposed(by: bag)
+        
+        combined.map { self.shouldAnimateActivityIndicator(locationVM: $0.0, weatherVM: $0.1) }
+            .asDriver(onErrorJustReturn: true)
+            .drive(self.activityIndicatorView.rx.isHidden)
+            .disposed(by: bag)
+        
+        let errorCond = viewModel.map {
+            self.shouldDisplayErrorPrompt(locationVM: $0.0, weatherVM: $0.1)
+            }.asDriver(onErrorJustReturn: true)
+        
+        errorCond.map { !$0 }
+            .drive(self.retryButton.rx.isHidden)
+            .disposed(by: bag)
+        errorCond.map { !$0 }
+            .drive(self.loadingFailedLabel.rx.isHidden)
+            .disposed(by: bag)
+        errorCond.map { _ in return String.ok }
+            .drive(self.loadingFailedLabel.rx.text)
+            .disposed(by: bag)
+    }
+    
+    override func setupUI() {
+        self.retryButton.rx.tap.subscribe(onNext: { _ in
+            self.weatherVM.accept(.empty)
+            self.locationVM.accept(.empty)
+            
+            (self.parent as? RootViewController)?.fetchCity()
+            (self.parent as? RootViewController)?.fetchWeather()
+        }).disposed(by: bag)
     }
     
     func updateView() {
@@ -78,5 +119,28 @@ class CurrentViewController: WeatherViewController {
     
     @IBAction func settingsButtonPressed(_ sender: UIButton) {
         self.delegate?.settingsButtonPressed(controller: self)
+    }
+}
+
+fileprivate extension CurrentViewController {
+    
+    func shouldDisplayWeatherContainer(locationVM: CurrentLocationViewModel, weatherVM: CurrentWeatherViewModel) -> Bool {
+        return !locationVM.isEmpty && !weatherVM.isEmpty && !locationVM.isInvalid && !weatherVM.isInvalid
+    }
+    
+    func shouldHideWeatherContainer(locationVM: CurrentLocationViewModel, weatherVM: CurrentWeatherViewModel) -> Bool {
+        return locationVM.isEmpty || locationVM.isInvalid || weatherVM.isEmpty || weatherVM.isInvalid
+    }
+    
+    func shouldHideActivityIndicator(locationVM: CurrentLocationViewModel, weatherVM: CurrentWeatherViewModel) -> Bool {
+        return (!locationVM.isEmpty && !weatherVM.isEmpty) || locationVM.isInvalid || weatherVM.isInvalid
+    }
+    
+    func shouldAnimateActivityIndicator(locationVM: CurrentLocationViewModel, weatherVM: CurrentWeatherViewModel) -> Bool {
+        return locationVM.isEmpty || weatherVM.isEmpty
+    }
+    
+    func shouldDisplayErrorPrompt(locationVM: CurrentLocationViewModel, weatherVM: CurrentWeatherViewModel) -> Bool {
+        return locationVM.isInvalid || weatherVM.isInvalid
     }
 }

@@ -18,7 +18,13 @@ struct CurrentLocationViewModel {
     
     static let empty = CurrentLocationViewModel.init(location: Location.empty)
     
-    var isEmoty: Bool {
+    static let invalid = CurrentLocationViewModel.init(location: Location.invalid)
+    
+    var isEmpty: Bool {
         return self.location == Location.empty
+    }
+    
+    var isInvalid: Bool {
+        return self.location == Location.invalid
     }
 }

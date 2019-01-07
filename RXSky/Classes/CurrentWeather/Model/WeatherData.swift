@@ -26,7 +26,9 @@ struct WeatherData: Codable {
         let data: [ForecastData]
     }
     
-    static let empty = WeatherData.init(latitude: 0, longitude: 0, currently: CurrentWeather.init(time: Date(), summary: "", icon: "", temperature: 0, humidity: 0), daily: WeekWeatherData.init(data: []))
+    static let empty = WeatherData.init(latitude: 0, longitude: 0, currently: CurrentWeather.init(time: Date.from(string: "1970-01-01"), summary: "", icon: "", temperature: 0, humidity: 0), daily: WeekWeatherData.init(data: []))
+    static let invalid = WeatherData.init(latitude: 0, longitude: 0, currently: CurrentWeather.init(time: Date.from(string: "1970-01-01"), summary: "n/a", icon: "n/a", temperature: -274, humidity: -1), daily: WeekWeatherData.init(data: []))
+    
 }
 
 extension WeatherData: Equatable {

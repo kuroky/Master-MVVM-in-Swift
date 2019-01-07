@@ -17,6 +17,7 @@ struct Location: Equatable {
     }
     
     static let empty = Location.init(name: "", latitude: 0, longitude: 0)
+    static let invalid = Location.init(name: "n/a", latitude: 0, longitude: 0)
     
     init(name: String, latitude: Double, longitude: Double) {
         self.name = name

@@ -121,6 +121,16 @@
                                 <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rUF-jV-sYv">
+                                <rect key="frame" x="157.5" y="109.5" width="60" height="35"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="35" id="3X2-6L-PcA"/>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="60" id="fLy-nA-nhV"/>
+                                </constraints>
+                                <state key="normal" title="Retry">
+                                    <color key="titleColor" red="0.42745098040000001" green="0.80784313730000001" blue="0.1450980392" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                            </button>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MXB-Sf-Ang">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="254"/>
                                 <subviews>
@@ -210,8 +220,10 @@
                             <constraint firstItem="ftX-yp-9YF" firstAttribute="centerY" secondItem="zYa-5O-Giu" secondAttribute="centerY" id="B0J-BL-4lc"/>
                             <constraint firstItem="4JE-Lv-4KY" firstAttribute="centerX" secondItem="zYa-5O-Giu" secondAttribute="centerX" id="CKj-em-tJm"/>
                             <constraint firstItem="MXB-Sf-Ang" firstAttribute="top" secondItem="x7g-su-yFM" secondAttribute="top" id="LvP-WQ-5at"/>
+                            <constraint firstItem="rUF-jV-sYv" firstAttribute="centerY" secondItem="zYa-5O-Giu" secondAttribute="centerY" id="cHu-VO-nhz"/>
                             <constraint firstItem="MXB-Sf-Ang" firstAttribute="leading" secondItem="x7g-su-yFM" secondAttribute="leading" id="mxN-IP-EdZ"/>
                             <constraint firstAttribute="bottom" secondItem="MXB-Sf-Ang" secondAttribute="bottom" id="nI2-N9-bCZ"/>
+                            <constraint firstItem="rUF-jV-sYv" firstAttribute="centerX" secondItem="zYa-5O-Giu" secondAttribute="centerX" id="rjs-sO-aMi"/>
                             <constraint firstItem="x7g-su-yFM" firstAttribute="trailing" secondItem="ftX-yp-9YF" secondAttribute="trailing" constant="10" id="xBG-6E-M4N"/>
                             <constraint firstItem="ftX-yp-9YF" firstAttribute="leading" secondItem="x7g-su-yFM" secondAttribute="leading" constant="10" id="zU0-Jd-sAh"/>
                             <constraint firstItem="4JE-Lv-4KY" firstAttribute="centerY" secondItem="zYa-5O-Giu" secondAttribute="centerY" id="zy0-wI-3e7"/>
@@ -224,6 +236,7 @@
                         <outlet property="humidityLabel" destination="eWY-fh-Djd" id="Nli-dy-Y07"/>
                         <outlet property="loadingFailedLabel" destination="ftX-yp-9YF" id="Q1Q-ZT-KgW"/>
                         <outlet property="locationLabel" destination="zJc-eU-bHT" id="PZj-UQ-1VY"/>
+                        <outlet property="retryButton" destination="rUF-jV-sYv" id="F5Y-wZ-6nN"/>
                         <outlet property="summaryLabel" destination="27t-MP-zz4" id="1Rx-r4-DEG"/>
                         <outlet property="temperatureLabel" destination="Llc-gc-V6y" id="jrG-vr-kt8"/>
                         <outlet property="weatherContainerView" destination="MXB-Sf-Ang" id="gYC-We-lCW"/>

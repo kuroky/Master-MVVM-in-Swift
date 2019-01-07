@@ -9,6 +9,7 @@
 import UIKit
 import CoreLocation
 import RxSwift
+import RxCocoa
 
 class RootViewController: UIViewController {
 
@@ -51,7 +52,7 @@ class RootViewController: UIViewController {
                                                object: nil)
     }
     
-    private func fetchCity() {
+    func fetchCity() {
         guard let currentLocation = self.currentLocation else {
             return
         }
@@ -59,6 +60,7 @@ class RootViewController: UIViewController {
         CLGeocoder().reverseGeocodeLocation(currentLocation) { (placemarks, error) in
             if let error = error {
                 dump(error)
+                self.currentWeatherViewController.locationVM.accept(CurrentLocationViewModel.invalid)
             }
             else if let city = placemarks?.first?.locality {
                 // noti vc
@@ -68,7 +70,7 @@ class RootViewController: UIViewController {
         }
     }
     
-    private func fetchWeather() {
+    func fetchWeather() {
         guard let currentLocation = self.currentLocation else {
             return
         }
@@ -128,10 +130,11 @@ class RootViewController: UIViewController {
     
     //MARK:- location
     private func requestLocation() {
-        self.manager.delegate = self
-        
         if CLLocationManager.authorizationStatus() == .authorizedWhenInUse {
-            self.manager.requestLocation()
+            self.manager.startUpdatingLocation()
+            self.manager.rx.didUpdateLocations.take(1).subscribe(onNext: {
+                    self.currentLocation = $0.first
+                }).disposed(by: bag)
         }
         else {
             self.manager.requestWhenInUseAuthorization()
@@ -146,27 +149,6 @@ class RootViewController: UIViewController {
     @IBAction func unwindToRootViewController(
         segue: UIStoryboardSegue) {
         
-    }
-}
-
-//MARK:- CLLocationManagerDelegate
-extension RootViewController: CLLocationManagerDelegate {
-    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        if let location = locations.first {
-            self.currentLocation = location
-            self.manager.delegate = nil
-            self.manager.startUpdatingLocation()
-        }
-    }
-    
-    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
-        if status == .authorizedWhenInUse {
-            self.manager.requestLocation()
-        }
-    }
-    
-    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
-        dump(error)
     }
 }
 
