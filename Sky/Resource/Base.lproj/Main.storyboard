@@ -365,10 +365,10 @@
             </objects>
             <point key="canvasLocation" x="-102" y="824"/>
         </scene>
-        <!--Table View Controller-->
+        <!--Locations-->
         <scene sceneID="x8i-Eb-bNT">
             <objects>
-                <tableViewController id="ERb-TK-QFK" sceneMemberID="viewController">
+                <tableViewController id="ERb-TK-QFK" customClass="LocationsViewController" customModule="Sky" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="66y-4X-yLE">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -404,14 +404,81 @@
                             <outlet property="delegate" destination="ERb-TK-QFK" id="yzp-lc-7bZ"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" id="DF7-BA-NGe">
-                        <barButtonItem key="leftBarButtonItem" style="plain" systemItem="add" id="aCr-NK-46k"/>
+                    <navigationItem key="navigationItem" title="Locations" id="DF7-BA-NGe">
+                        <barButtonItem key="leftBarButtonItem" style="plain" systemItem="add" id="aCr-NK-46k">
+                            <connections>
+                                <action selector="clickAddLocation:" destination="ERb-TK-QFK" id="hSe-DQ-PzE"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="done" id="2LS-yd-WW4"/>
                     </navigationItem>
+                    <connections>
+                        <segue destination="waG-P7-g1v" kind="show" identifier="SegueAddLocationView" id="99Z-IF-41D"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ImZ-6m-zYt" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3030" y="-192"/>
+            <point key="canvasLocation" x="2943" y="-192"/>
+        </scene>
+        <!--Add Location View Controller-->
+        <scene sceneID="AtC-7C-GS5">
+            <objects>
+                <tableViewController id="waG-P7-g1v" customClass="AddLocationViewController" customModule="Sky" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="7Gq-8I-Kbn">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <searchBar key="tableHeaderView" contentMode="redraw" id="LOE-qw-7gC">
+                            <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                            <textInputTraits key="textInputTraits"/>
+                        </searchBar>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="LocationCell" id="YaE-Xm-PtY" customClass="LocationTableViewCell" customModule="Sky" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="72" width="375" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="YaE-Xm-PtY" id="QQe-3b-zhI">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="a6d-Pv-8dI">
+                                            <rect key="frame" x="24" y="12" width="327" height="19.5"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstAttribute="trailingMargin" secondItem="a6d-Pv-8dI" secondAttribute="trailing" constant="8" id="3DP-0b-xMW"/>
+                                        <constraint firstItem="a6d-Pv-8dI" firstAttribute="centerY" secondItem="QQe-3b-zhI" secondAttribute="centerY" id="9H9-MJ-lLU"/>
+                                        <constraint firstItem="a6d-Pv-8dI" firstAttribute="leading" secondItem="QQe-3b-zhI" secondAttribute="leadingMargin" constant="8" id="OmL-xI-wHL"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="label" destination="a6d-Pv-8dI" id="swc-61-rlJ"/>
+                                </connections>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="waG-P7-g1v" id="jpy-mH-rot"/>
+                            <outlet property="delegate" destination="waG-P7-g1v" id="ueF-d2-nXz"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" id="XeU-7N-eBU">
+                        <barButtonItem key="rightBarButtonItem" systemItem="cancel" id="kuj-g8-4eO">
+                            <connections>
+                                <segue destination="Kwj-ig-0IT" kind="unwind" unwindAction="unwindToLocationsViewControllerWithSegue:" id="Fwg-ld-LKV"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="searchBar" destination="LOE-qw-7gC" id="Z2d-KL-Anh"/>
+                    </connections>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="EFC-fj-HBA" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="Kwj-ig-0IT" userLabel="Exit" sceneMemberID="exit"/>
+            </objects>
+            <point key="canvasLocation" x="3773" y="-192"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="CJt-sT-svL">

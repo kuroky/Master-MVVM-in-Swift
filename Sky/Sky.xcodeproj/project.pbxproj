@@ -28,6 +28,7 @@
 		5B2CDE9621DF646500A600BD /* LocationRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B2CDE9521DF646500A600BD /* LocationRepresentable.swift */; };
 		5B2CDE9821DF64A200A600BD /* LocationsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B2CDE9721DF64A200A600BD /* LocationsViewModel.swift */; };
 		5B2CDE9A21DF655C00A600BD /* CLLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B2CDE9921DF655C00A600BD /* CLLocation.swift */; };
+		5B88616B21E2F6DB008835C2 /* AddLocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B88616A21E2F6DB008835C2 /* AddLocationViewController.swift */; };
 		5B99C8A221DCA76D00C53E64 /* WeatherDataManagerTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B99C8A121DCA76D00C53E64 /* WeatherDataManagerTest.swift */; };
 		5B99C8A921DCA77600C53E64 /* MockURLSessionn.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BFC4EB621DC9D8900140D08 /* MockURLSessionn.swift */; };
 		5B99C8AB21DCA77600C53E64 /* MockURLSessionDataTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BFC4EBD21DCA00500140D08 /* MockURLSessionDataTask.swift */; };
@@ -97,6 +98,7 @@
 		5B2CDE9521DF646500A600BD /* LocationRepresentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationRepresentable.swift; sourceTree = "<group>"; };
 		5B2CDE9721DF64A200A600BD /* LocationsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationsViewModel.swift; sourceTree = "<group>"; };
 		5B2CDE9921DF655C00A600BD /* CLLocation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CLLocation.swift; sourceTree = "<group>"; };
+		5B88616A21E2F6DB008835C2 /* AddLocationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddLocationViewController.swift; sourceTree = "<group>"; };
 		5B99C89F21DCA76D00C53E64 /* SkyTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SkyTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		5B99C8A121DCA76D00C53E64 /* WeatherDataManagerTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherDataManagerTest.swift; sourceTree = "<group>"; };
 		5B99C8A321DCA76D00C53E64 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -319,6 +321,7 @@
 				5B2CDE8D21DF625E00A600BD /* Model */,
 				5B2CDE8C21DF625900A600BD /* View */,
 				5B2CDE8B21DF625300A600BD /* ViewModel */,
+				5B2CDE9421DF643100A600BD /* Protocols */,
 			);
 			path = LocationsViewController;
 			sourceTree = "<group>";
@@ -328,7 +331,7 @@
 			children = (
 				5B2CDE9721DF64A200A600BD /* LocationsViewModel.swift */,
 				5B2CDE9021DF631A00A600BD /* LocationsViewController.swift */,
-				5B2CDE9421DF643100A600BD /* Protocols */,
+				5B88616A21E2F6DB008835C2 /* AddLocationViewController.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -714,6 +717,7 @@
 				5B2CDE9621DF646500A600BD /* LocationRepresentable.swift in Sources */,
 				5BAE25DE21DDBE130022265E /* RootViewController.swift in Sources */,
 				5B17BB0B21DF393B00DC7004 /* WeekWeatherDayViewModel.swift in Sources */,
+				5B88616B21E2F6DB008835C2 /* AddLocationViewController.swift in Sources */,
 				5BAE25DC21DDB9810022265E /* Double.swift in Sources */,
 				5BAE25DA21DDA9520022265E /* CurrentViewController.swift in Sources */,
 				5BFC4EB521DC9D3B00140D08 /* URLSession.swift in Sources */,

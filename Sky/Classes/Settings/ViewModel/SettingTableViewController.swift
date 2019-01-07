@@ -22,6 +22,22 @@ class SettingTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
     }
+}
+
+extension SettingTableViewController {
+    
+    private enum Section: Int {
+        case date
+        case temperature
+        
+        var numberOfRows: Int {
+            return 2
+        }
+        
+        static var count: Int {
+            return Section.temperature.rawValue + 1
+        }
+    }
     
     override func numberOfSections(in tableView: UITableView) -> Int {
         return Section.count
@@ -108,21 +124,5 @@ class SettingTableViewController: UITableViewController {
         
         let sections = IndexSet(integer: indexPath.section)
         tableView.reloadSections(sections, with: .none)
-    }
-}
-
-extension SettingTableViewController {
-    
-    private enum Section: Int {
-        case date
-        case temperature
-        
-        var numberOfRows: Int {
-            return 2
-        }
-        
-        static var count: Int {
-            return Section.temperature.rawValue + 1
-        }
     }
 }

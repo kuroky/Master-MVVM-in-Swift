@@ -59,7 +59,7 @@ class RootViewController: UIViewController {
             }
             else if let city = placemarks?.first?.locality {
                 // noti vc
-                self.currentWeatherViewController.viewModel.location = Location(name: city, latitude: currentLocation.coordinate.latitude, longitude: currentLocation.coordinate.longitude)
+                self.currentWeatherViewController.viewModel.location = Location(name: city, latitude: currentLocation.coordinate.latitude, longitude: currentLocation.coordinate.longitude)                
             }
         }
     }
@@ -115,9 +115,15 @@ class RootViewController: UIViewController {
             destination.delegate = self
             self.settingViewController = destination
         case segueLocations:
-            guard let destination = segue.destination as? LocationsViewController else {
+            guard let navigationController = segue.destination as? UINavigationController else {
                 fatalError("Invalid destionation weekWeather view controller")
             }
+            
+            guard let destination = navigationController.topViewController as? LocationsViewController else {
+                fatalError("Invalid destionation weekWeather view controller")
+            }
+            destination.delegate = self
+            destination.currentLocation = self.currentLocation
             self.locationViewController = destination
         default:
             break
@@ -171,7 +177,7 @@ extension RootViewController: CLLocationManagerDelegate {
 extension RootViewController: CurrentWeatherViewControllerDelegate {
     
     func locationButtonPressed(controller: CurrentViewController) {
-        
+        performSegue(withIdentifier: segueLocations, sender: nil)
     }
     
     func settingsButtonPressed(controller: CurrentViewController) {
@@ -193,5 +199,11 @@ extension RootViewController: SettingsViewControllerDelegate {
     func controllerDidChangeTemperatureMode(
         controller: SettingTableViewController) {
         reloadUI()
+    }
+}
+
+extension RootViewController: LocationsViewControllerDelegate {
+    func controller(_ controller: LocationsViewController, didSelectLocation location: CLLocation) {
+        currentLocation = location
     }
 }
