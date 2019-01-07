@@ -7,6 +7,8 @@
 //
 
 import Foundation
+import RxSwift
+import RxCocoa
 
 class DarkSkyURLSession: URLSessionProtocol {
     func dataTask(with request: URLRequest, completionHandler: @escaping DataTaskHandler) -> URLSessionDataTaskProtocol {
@@ -69,40 +71,17 @@ final class WeatherDataManager {
     typealias CompletionHandler = (WeatherData?, DataManagerError?) -> Void
     
     //MARK:- weather request
-    func weatherDataAt(latitude: Double, longtitude: Double, completion: @escaping CompletionHandler) {
+    func weatherDataAt(latitude: Double, longtitude: Double) -> Observable<WeatherData> {
         let url = baseURL.appendingPathComponent("\(latitude),\(longtitude)")
         var request = URLRequest(url: url)
         
         request.httpMethod = "GET"
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         
-        self.urlSession.dataTask(with: request, completionHandler: {(data, response, error) in
-            self.didFinishGettingWeatherData(data: data, response: response, error: error, completion: completion)
-        }).resume()
-    }
-    
-    func didFinishGettingWeatherData(data: Data?, response: URLResponse?, error: Error?, completion: CompletionHandler) {
-        if let _ = error {
-            completion(nil, DataManagerError.failedRequest) // error
-            return
-        }
-            
-        guard let data = data, let response = response as? HTTPURLResponse else {
-            completion(nil, DataManagerError.invalidResponse) // parser error
-            return
-        }
-        
-        if response.statusCode == 200 {
+        return (self.urlSession as! URLSession).rx.data(request: request).map {
             let decoder = JSONDecoder()
             decoder.dateDecodingStrategy = .secondsSince1970
-            guard let weatherData = try? decoder.decode(WeatherData.self, from: data) else {
-                completion(nil, DataManagerError.invalidResponse) // parser error
-                return
-            }
-            completion(weatherData, nil)
-        }
-        else {
-            completion(nil, DataManagerError.failedRequest) // error
+            return try decoder.decode(WeatherData.self, from: $0)
         }
     }
 }

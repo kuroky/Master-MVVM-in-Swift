@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import RxSwift
+import RxCocoa
 
 protocol CurrentWeatherViewControllerDelegate: class {
     func locationButtonPressed(
@@ -26,39 +28,48 @@ class CurrentViewController: WeatherViewController {
     
     weak var delegate: CurrentWeatherViewControllerDelegate?
     
-    var viewModel: CurrentWeatherViewModel! {
-        didSet {
-            DispatchQueue.main.async {
-                self.updateView()
-            }            
-        }
-    }
+    private var bag = DisposeBag()
+    var weatherVM: BehaviorRelay<CurrentWeatherViewModel> = BehaviorRelay(value: CurrentWeatherViewModel.empty)
+    var locationVM: BehaviorRelay<CurrentLocationViewModel> = BehaviorRelay(value: CurrentLocationViewModel.empty)
+    
+//    var viewModel: CurrentWeatherViewModel! {
+//        didSet {
+//            DispatchQueue.main.async {
+//                self.updateView()
+//            }
+//        }
+//    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        let viewModel = Observable.combineLatest(locationVM, weatherVM) {
+                return ($0, $1)
+            }
+            .filter {
+                let (location, weather) = $0
+                return !(location.isEmoty) && !(weather.isEmpty)
+            }
+            .share(replay: 1, scope: .whileConnected)
+            .observeOn(MainScheduler.instance)
+        
+        viewModel.map {_ in false }.bind(to: self.activityIndicatorView.rx.isAnimating).disposed(by: bag)
+        viewModel.map {_ in false }.bind(to: self.weatherContainerView.rx.isHidden).disposed(by: bag)
+        
+        viewModel.map {$0.0.city }.bind(to: self.locationLabel.rx.text).disposed(by: bag)
+        viewModel.map { $0.1.temperature }.bind(to: self.temperatureLabel.rx.text).disposed(by: bag)
+        viewModel.map { $0.1.weatherIcon }.bind(to: self.weatherIcon.rx.image).disposed(by: bag)
+        viewModel.map { $0.1.humidity }.bind(to: self.humidityLabel.rx.text).disposed(by: bag)
+        viewModel.map { $0.1.summary }.bind(to: self.summaryLabel.rx.text).disposed(by: bag)
+        viewModel.map { $0.1.date }.bind(to: self.dateLabel.rx.text).disposed(by: bag)
     }
     
     func updateView() {
         self.activityIndicatorView.stopAnimating()
-        if let data = self.viewModel, self.viewModel.isUpdateReady {
-            self.updateWeatherContainer(with: data)
-        }
-        else {
-            self.loadingFailedLabel.isHidden = false
-            self.loadingFailedLabel.text = "Cannot load fetch weather/location data from the network."
-        }
+        self.weatherVM.accept(weatherVM.value)
+        self.locationVM.accept(locationVM.value)
     }
     
-    func updateWeatherContainer(with data: CurrentWeatherViewModel) {
-        self.weatherContainerView.isHidden = false
-        
-        self.locationLabel.text = data.city
-        self.temperatureLabel.text = data.temperature
-        self.weatherIcon.image = data.weatherIcon
-        self.humidityLabel.text = data.humidity
-        self.summaryLabel.text = data.summary
-        self.dateLabel.text =  data.date
-    }
     
     //MARK:- Button Action
     @IBAction func locationButtonPressed(_ sender: UIButton) {

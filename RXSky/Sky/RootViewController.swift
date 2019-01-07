@@ -8,6 +8,7 @@
 
 import UIKit
 import CoreLocation
+import RxSwift
 
 class RootViewController: UIViewController {
 
@@ -20,6 +21,8 @@ class RootViewController: UIViewController {
     private let segueWeekWeather = "SegueWeekWeather"
     private let segueSettings = "SegueSettings"
     private let segueLocations = "SegueLocations"
+    
+    private var bag = DisposeBag()
     
     private lazy var manager: CLLocationManager = {
        let manager = CLLocationManager()
@@ -59,7 +62,8 @@ class RootViewController: UIViewController {
             }
             else if let city = placemarks?.first?.locality {
                 // noti vc
-                self.currentWeatherViewController.viewModel.location = Location(name: city, latitude: currentLocation.coordinate.latitude, longitude: currentLocation.coordinate.longitude)                
+                let location = Location(name: city, latitude: currentLocation.coordinate.latitude, longitude: currentLocation.coordinate.longitude)
+                self.currentWeatherViewController.locationVM.accept(CurrentLocationViewModel(location: location))
             }
         }
     }
@@ -72,20 +76,12 @@ class RootViewController: UIViewController {
         let lat = currentLocation.coordinate.latitude
         let lon = currentLocation.coordinate.longitude
         
-        WeatherDataManager.shared.weatherDataAt(latitude: lat, longtitude: lon) { (data, error) in
-            if let error = error {
-                dump(error)
-                return
-            }
-            
-            if let response = data {
-                // noti vc
-                self.currentWeatherViewController.viewModel.weather = response
-                self.weekWeatherViewController.viewModel = WeekWeatherViewModel(weatherData: response.daily.data)
-            }
-        }
+        let weather = WeatherDataManager.shared.weatherDataAt(latitude: lat, longtitude: lon).share(replay: 1, scope: .whileConnected)
+        weather.map { CurrentWeatherViewModel(weather: $0) }.bind(to: self.currentWeatherViewController.weatherVM).disposed(by: bag)
+        weather.subscribe(onNext: {
+            self.weekWeatherViewController.viewModel = WeekWeatherViewModel(weatherData: $0.daily.data)
+        }).disposed(by: bag)
     }
-    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         guard let identifier = segue.identifier else {
             return
@@ -97,7 +93,7 @@ class RootViewController: UIViewController {
                 fatalError("Invalid destionation currentWeather view controller")
             }
             destination.delegate = self
-            destination.viewModel = CurrentWeatherViewModel()
+            //destination.viewModel = CurrentWeatherViewModel()
             self.currentWeatherViewController = destination
         case segueWeekWeather:
             guard let destination = segue.destination as? WeekWeatherViewController else {

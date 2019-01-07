@@ -10,39 +10,14 @@ import UIKit
 
 struct CurrentWeatherViewModel {
     
-    var isLocationReady = false
-    var isWeatherReady = false
+    static let empty = CurrentWeatherViewModel(weather: WeatherData.empty)
     
-    var weather: WeatherData! {
-        didSet {
-            if weather != nil {
-                self.isWeatherReady = true
-            }
-            else {
-                self.isWeatherReady = false
-            }
-        }
+    var isEmpty: Bool {
+        return self.weather == WeatherData.empty
     }
     
-    var location: Location! {
-        didSet {
-            if location != nil {
-                self.isLocationReady = true
-            }
-            else {
-                self.isLocationReady = false
-            }
-        }
-    }
-    
-    var isUpdateReady: Bool {
-        return isLocationReady && isWeatherReady
-    }
-    
-    var city: String {
-        return self.location.name
-    }
-    
+    var weather: WeatherData!
+        
     var temperature: String {
         let value = weather.currently.temperature
         
