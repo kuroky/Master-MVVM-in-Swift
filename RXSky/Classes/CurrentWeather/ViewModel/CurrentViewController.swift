@@ -71,16 +71,16 @@ class CurrentViewController: WeatherViewController {
             .disposed(by: bag) // view容器
         
         combined.map { self.shouldHideActivityIndicator(locationVM: $0.0, weatherVM: $0.1) }
-            .asDriver(onErrorJustReturn: false)
+            .asDriver(onErrorJustReturn: true)
             .drive(self.activityIndicatorView.rx.isHidden)
             .disposed(by: bag)
         
         combined.map { self.shouldAnimateActivityIndicator(locationVM: $0.0, weatherVM: $0.1) }
             .asDriver(onErrorJustReturn: true)
-            .drive(self.activityIndicatorView.rx.isHidden)
+            .drive(self.activityIndicatorView.rx.isAnimating)
             .disposed(by: bag)
         
-        let errorCond = viewModel.map {
+        let errorCond = combined.map {
             self.shouldDisplayErrorPrompt(locationVM: $0.0, weatherVM: $0.1)
             }.asDriver(onErrorJustReturn: true)
         
@@ -110,7 +110,6 @@ class CurrentViewController: WeatherViewController {
         self.weatherVM.accept(weatherVM.value)
         self.locationVM.accept(locationVM.value)
     }
-    
     
     //MARK:- Button Action
     @IBAction func locationButtonPressed(_ sender: UIButton) {

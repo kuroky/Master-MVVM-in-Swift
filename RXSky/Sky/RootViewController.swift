@@ -182,6 +182,8 @@ extension RootViewController: SettingsViewControllerDelegate {
 
 extension RootViewController: LocationsViewControllerDelegate {
     func controller(_ controller: LocationsViewController, didSelectLocation location: CLLocation) {
+        self.currentWeatherViewController.weatherVM.accept(CurrentWeatherViewModel.empty)
+        self.currentWeatherViewController.locationVM.accept(CurrentLocationViewModel.empty)
         currentLocation = location
     }
 }

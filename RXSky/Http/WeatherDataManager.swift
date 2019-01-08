@@ -85,6 +85,6 @@ final class WeatherDataManager {
                 decoder.dateDecodingStrategy = .secondsSince1970
                 let weatherData = try decoder.decode(WeatherData.self, from: $0)
                 return weatherData
-            }
+            }.catchErrorJustReturn(WeatherData.invalid)
     }
 }
