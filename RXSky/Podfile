@@ -6,8 +6,8 @@ target 'Sky' do
   use_frameworks!
 
   # Pods for Sky
-  pod 'RxSwift',    '4.4.0'
-  pod 'RxCocoa',    '4.4.0'
-  pod 'Alamofire',      '4.7.3'
+  pod 'RxSwift',    '4.5.0'
+  pod 'RxCocoa',    '4.5.0'
+  pod 'Alamofire',      '4.8.2'
   
 end

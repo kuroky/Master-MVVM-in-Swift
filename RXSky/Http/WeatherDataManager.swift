@@ -85,6 +85,24 @@ final class WeatherDataManager {
                 decoder.dateDecodingStrategy = .secondsSince1970
                 let weatherData = try decoder.decode(WeatherData.self, from: $0)
                 return weatherData
-            }.catchErrorJustReturn(WeatherData.invalid)
+            }
+            .retry()
+            .retryWhen { e in
+                e.enumerated()
+                    .flatMap {
+                        (attempt, error) -> Observable<Int> in
+                            if (attempt >= 3) {
+                                return Observable.error(error)
+                            }
+                            else {
+                                return Observable<Int>.timer(Double(attempt + 1), scheduler: MainScheduler.instance).take(1)
+                            }
+                }
+            }
+            .materialize()
+            .do(onNext: { print($0) })
+            .dematerialize()
+            .catchErrorJustReturn(WeatherData.invalid)
+        //.catchErrorJustReturn(WeatherData.invalid)
     }
 }
